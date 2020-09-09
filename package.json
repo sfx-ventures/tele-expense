@@ -1,0 +1,14 @@
+{
+  "name": "tbot",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "sequelize": "^6.3.5",
+    "slimbot": "^4.9.0",
+    "sqlite3": "^5.0.0"
+  }
+}

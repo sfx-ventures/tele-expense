@@ -1,0 +1,26 @@
+https://api.telegram.org/bot1212732152:AAEi84X7ujHhi0vcYvTSXiZpzh-1hpWC3BI/setWebhook?url=https://c2438a34fb7c.ngrok.io/
+
+curl -F "url=https://29ff825db676.ngrok.io/tbot" -F "certificate=@YOURPUBLIC.pem" https://api.telegram.org/bot1212732152:AAEi84X7ujHhi0vcYvTSXiZpzh-1hpWC3BI/setWebhook
+
+curl -F "url=https://29ff825db676.ngrok.io/tbot" https://api.telegram.org/bot1212732152:AAEi84X7ujHhi0vcYvTSXiZpzh-1hpWC3BI/setWebhook
+
+
+{
+  message_id: 61,
+  from: {
+    id: 636465515,
+    is_bot: false,
+    first_name: 'Hafiz Aizuddin',
+    username: 'hafizaizuddin',
+    language_code: 'en'
+  },
+  chat: {
+    id: 636465515,
+    first_name: 'Hafiz Aizuddin',
+    username: 'hafizaizuddin',
+    type: 'private'
+  },
+  date: 1599564423,
+  text: '/start',
+  entities: [ { offset: 0, length: 6, type: 'bot_command' } ]
+}
