@@ -19,9 +19,15 @@ module.exports = (sequelize, Sequelize) => {
         },
         message_id: {
             type: Sequelize.INTEGER
+        },
+        month: {
+            type: Sequelize.STRING
+        },
+        year: {
+            type: Sequelize.INTEGER
         }
-    },{
-        timestamps:true
+    }, {
+        timestamps: true
     })
 
     return Account
