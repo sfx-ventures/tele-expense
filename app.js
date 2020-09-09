@@ -1,14 +1,11 @@
 const express = require('express')
 const app = express()
-const port = 3000
 const moment = require('moment')
-
-const Slimbot = require('slimbot')
-const slimbot = new Slimbot('1212732152:AAEi84X7ujHhi0vcYvTSXiZpzh-1hpWC3BI')
 
 const db = require("./models/")
 const Account = db.account
-db.sequelize.sync({ force: true })
+// db.sequelize.sync({ force: true })
+db.sequelize.sync()
 
 const proc = async (r, mode) => {
 
@@ -54,28 +51,28 @@ BALANCE : RM ${(income - expense).toFixed(2)}`
       status = `Invalid Syntax. ${status}`
       break
   }
-
   return status
 }
 
-slimbot.on('message', async message => {
-  // console.log(message)
-  slimbot.sendMessage(message.chat.id, await proc(message, 'new'), { parse_mode: 'html' })
+const Slimbot = require('slimbot')
+const slimbot = new Slimbot('1212732152:AAEi84X7ujHhi0vcYvTSXiZpzh-1hpWC3BI')
+slimbot.setWebhook({ url: 'https://be8c5daec102.ngrok.io/bot' });
+
+// Get webhook status
+// slimbot.getWebhookInfo();
+
+app.use(express.json())
+app.post('/bot', async (req,res,err)=>{
+  let message = req.body.message, verb = 'new', opt = {}
+  if(!message) {
+    message = req.body.edited_message
+    verb = 'edit'
+    opt = {reply_to_message_id: message.message_id}
+  }
+  slimbot.sendMessage(message.chat.id, await proc(message, verb), { parse_mode: 'html' , ...opt })
+  res.sendStatus(200)
 })
 
-slimbot.on('edited_message', async message => {
-  // console.log(message)
-  slimbot.sendMessage(message.chat.id, await proc(message, 'edit'), { parse_mode: 'html', reply_to_message_id: message.message_id })
-})
-
-// Call API
-
-slimbot.startPolling()
-
-app.get('/', (req, res, err) => {
-  res.send('yes it is')
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+app.listen(3000, () => {
+  console.log(`Example app listening at http://localhost:3000`)
 })
