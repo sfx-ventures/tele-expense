@@ -1,13 +1,15 @@
 const express = require('express')
 const app = express()
 const moment = require('moment')
+const path = require("path")
 
 const db = require("./models/")
 const Account = db.account
 // db.sequelize.sync({ force: true })
 db.sequelize.sync()
 
-const url = 'https://be8c5daec102.ngrok.io'
+const url = 'https://9fb307402cc4.ngrok.io'
+
 const proc = async (r, mode) => {
 
   let temp = r.text.split(' ')
@@ -65,13 +67,19 @@ BALANCE : RM ${(income - expense).toFixed(2)}`
 
 const Slimbot = require('slimbot')
 const slimbot = new Slimbot('1212732152:AAEi84X7ujHhi0vcYvTSXiZpzh-1hpWC3BI')
-slimbot.setWebhook({ url: `${url}/bot` });
+slimbot.setWebhook({ url: `${url}/api/v1/bot` });
 
 // Get webhook status
 // slimbot.getWebhookInfo();
 
 app.use(express.json())
-app.post('/bot', async (req,res,err)=>{
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+app.post('/api/v1/bot', async (req,res,err)=>{
   let message = req.body.message, verb = 'new', opt = {}
   if(!message) {
     message = req.body.edited_message
@@ -82,7 +90,7 @@ app.post('/bot', async (req,res,err)=>{
   res.sendStatus(200)
 })
 
-app.get('/chart/:id', async (req,res,err)=>{
+app.get('/api/v1/chart/:id', async (req,res,err)=>{
 
   let months = [], current, dateSplit, income, expense
   for (i = 0; i < 12; i++) {
