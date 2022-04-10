@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "sequelize": "^6.3.5",
     "slimbot": "^4.9.0",
     "sqlite3": "^5.0.0"
